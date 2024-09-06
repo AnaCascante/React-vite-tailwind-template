@@ -1,0 +1,1 @@
+//This component handles the registration form UI and functionality. It should include fields for user details like username, email, password, and confirm password, along with the registration button.
