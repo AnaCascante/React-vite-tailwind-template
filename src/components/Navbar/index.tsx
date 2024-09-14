@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { IoPersonCircle } from 'react-icons/io5';
 import { BiSolidHomeAlt2 } from 'react-icons/bi';
-import Logo from '../../assets/logo.png';
+import Logo from '../../assets/Logo.png';
 
 const Navbar = () => {
   return (
