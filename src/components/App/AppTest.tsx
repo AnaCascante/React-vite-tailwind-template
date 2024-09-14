@@ -17,4 +17,4 @@ function AppTest() {
   );
 }
 
-export default App;
+export default AppTest;
