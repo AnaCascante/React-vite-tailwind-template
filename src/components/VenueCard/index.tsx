@@ -5,13 +5,14 @@ import { Media } from '../../services/VenuesService';
 interface VenueCardProps {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   media: Media[];
   city: string;
   country: string;
   price: number;
   rating: number;
-  metaData: MetaData;
+  metaData?: MetaData;
+  isDetailed?: boolean;
 }
 
 const VenueCard: React.FC<VenueCardProps> = ({
@@ -24,12 +25,10 @@ const VenueCard: React.FC<VenueCardProps> = ({
   price,
   rating,
   metaData,
+  isDetailed,
 }) => {
   return (
-    <Link
-      to={`/venue/${id}`}
-      className="relative flex h-96 w-72 flex-col items-center justify-center rounded-lg bg-primary text-secondary shadow-lg"
-    >
+    <div className="relative flex h-96 w-72 flex-col items-center justify-center rounded-lg bg-primary text-secondary shadow-lg">
       <img
         src={media[0].url}
         alt={media[0].alt}
@@ -43,8 +42,19 @@ const VenueCard: React.FC<VenueCardProps> = ({
         </p>
         <p className="text-sm">Price: ${price}</p>
         <p className="text-sm">Rating: {rating}</p>
+
+        {isDetailed && metaData && (
+          <>
+            {metaData.wifi && <p>Gratis Wifi</p>}
+            {metaData.parking && <p>Gratis parking</p>}
+            {metaData.breakfast && <p>Breakfast included</p>}
+            {metaData.pets && <p>Pets allowed</p>}
+          </>
+        )}
+        {isDetailed && description && <p>{description}</p>}
       </div>
-    </Link>
+      <Link to={`/venue/${id}`}>View Venue</Link>
+    </div>
   );
 };
 

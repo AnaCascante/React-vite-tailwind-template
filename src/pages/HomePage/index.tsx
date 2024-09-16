@@ -24,13 +24,12 @@ const HomePage: React.FunctionComponent = (): JSX.Element => {
           key={venue.id}
           id={venue.id}
           name={venue.name}
-          description={venue.description}
           media={venue.media}
           city={venue.location.city}
           country={venue.location.country}
           price={venue.price}
           rating={venue.rating}
-          metaData={venue.metaData}
+          isDetailed={false}
         />
       ))}
     </div>

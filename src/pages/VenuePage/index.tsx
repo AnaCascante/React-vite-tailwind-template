@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FetchVenueById, Venue } from '../../services/VenuesService';
+import VenueCard from '../../components/VenueCard';
 
 const VenuePage: React.FC = () => {
   const { id = '' } = useParams<{ id: string }>();
@@ -9,8 +10,8 @@ const VenuePage: React.FC = () => {
   useEffect(() => {
     const getVenue = async () => {
       try {
-        const venue = await FetchVenueById(id);
-        setVenue(venue);
+        const fetchedVenue = await FetchVenueById(id);
+        setVenue(fetchedVenue);
       } catch (error) {
         console.error(error);
       }
@@ -23,19 +24,18 @@ const VenuePage: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center p-4">
-      <h1 className="text-3xl font-bold">{venue.name}</h1>
-      <img
-        src={venue.media[0].url}
-        alt={venue.media[0].alt}
-        className="h-96 w-96"
+    <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
+      <VenueCard
+        key={venue.id}
+        id={venue.id}
+        name={venue.name}
+        media={venue.media}
+        city={venue.location.city}
+        country={venue.location.country}
+        price={venue.price}
+        rating={venue.rating}
+        isDetailed={false}
       />
-      <p className="text-lg">{venue.description}</p>
-      <p className="text-lg">
-        {venue.location.city}, {venue.location.country}
-      </p>
-      <p className="text-lg">Price: ${venue.price}</p>
-      <p className="text-lg">Rating: {venue.rating}</p>
     </div>
   );
 };
