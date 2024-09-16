@@ -28,26 +28,23 @@ const VenueCard: React.FC<VenueCardProps> = ({
   metaData,
   isDetailed,
 }) => {
-
   const mediaItem = media && media.length > 0 ? media[0] : null;
 
   return (
     <div className="relative flex h-96 w-72 flex-col items-center justify-center rounded-lg bg-primary text-secondary shadow-lg">
-      { mediaItem ? (
+      {mediaItem ? (
         <img
           src={mediaItem.url}
           alt={mediaItem.alt}
-          className="w-full h-40 object-cover rounded-t-lg"
+          className="h-40 w-full rounded-t-lg object-cover"
         />
-      ): (
-        <img 
-          src= {Norway}
+      ) : (
+        <img
+          src={Norway}
           alt="Missing image"
-          className="w-full h-40 object-cover rounded-t-lg"
+          className="h-40 w-full rounded-t-lg object-cover"
         />
       )}
-
-      <div className="absolute top-0 right-0 p-2 bg-secondary text-primary rounded-bl-lg">
 
       <div className="p-4">
         <h2 className="text-lg font-bold">{name}</h2>
