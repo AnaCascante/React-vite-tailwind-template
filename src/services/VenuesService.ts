@@ -40,7 +40,7 @@ export interface Venue {
 }
 
 export const FetchVenues = async (): Promise<Venue[]> => {
-  const response = await fetch('https://v2.api.noroff.dev/api/venues');
+  const response = await fetch('https://v2.api.noroff.dev/holidaze/venues');
   if (!response.ok) {
     throw new Error('Network not responding');
   }
@@ -53,8 +53,10 @@ export const FetchVenues = async (): Promise<Venue[]> => {
   }
 };
 
-export default FetchVenueById = async (id: string): Promise<Venue> => {
-  const response = await fetch(`https://v2.api.noroff.dev/api/venues/${id}`);
+export const FetchVenueById = async (id: string): Promise<Venue> => {
+  const response = await fetch(
+    `https://v2.api.noroff.dev/holidaze/venues/${id}`
+  );
   if (!response.ok) {
     throw new Error('Network not responding');
   }

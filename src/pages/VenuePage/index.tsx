@@ -39,3 +39,5 @@ const VenuePage: React.FC = () => {
     </div>
   );
 };
+
+export default VenuePage;
