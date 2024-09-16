@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { FetchVenueById, Venue } from '../../services/VenuesService';
 
 const VenuePage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id = '' } = useParams<{ id: string }>();
   const [venue, setVenue] = useState<Venue | null>(null);
 
   useEffect(() => {

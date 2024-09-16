@@ -1,8 +1,8 @@
 export interface MetaData {
-  Wifi: boolean;
-  parking: boolean;
-  breakfast: boolean;
-  pets: boolean;
+  wifi?: boolean;
+  parking?: boolean;
+  breakfast?: boolean;
+  pets?: boolean;
 }
 
 export interface Media {
