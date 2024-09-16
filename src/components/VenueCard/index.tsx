@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { MetaData } from '../../services/VenuesService';
 import { Media } from '../../services/VenuesService';
+import Norway from '../../assets/Norway.png';
 
 interface VenueCardProps {
   id: string;
@@ -32,7 +33,7 @@ const VenueCard: React.FC<VenueCardProps> = ({
 
   return (
     <div className="relative flex h-96 w-72 flex-col items-center justify-center rounded-lg bg-primary text-secondary shadow-lg">
-      {mediaItem ? (
+      { mediaItem ? (
         <img
           src={mediaItem.url}
           alt={mediaItem.alt}
@@ -40,13 +41,14 @@ const VenueCard: React.FC<VenueCardProps> = ({
         />
       ): (
         <img 
-          src="https://via.placeholder.com/150"
+          src= {Norway}
           alt="Missing image"
           className="w-full h-40 object-cover rounded-t-lg"
+        />
       )}
 
       <div className="absolute top-0 right-0 p-2 bg-secondary text-primary rounded-bl-lg">
-        
+
       <div className="p-4">
         <h2 className="text-lg font-bold">{name}</h2>
         <p className="text-sm">{description}</p>
