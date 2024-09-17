@@ -64,6 +64,7 @@ const LoginForm: React.FC = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full rounded border border-gray-300 p-2"
+          autoComplete="off"
         />
         {emailError && <p className="text-red-500">{emailError}</p>}
       </label>
