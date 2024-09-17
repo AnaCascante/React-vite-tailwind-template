@@ -1,27 +1,53 @@
-const API_KEY = import.meta.env.VITE_KEY;
-import { LoginUser } from '../../services/Registration';
+import { LoginUser, mailRegex } from '../../services/Registration';
 import React, { useState } from 'react';
-
-interface LoginData {
-  email: string;
-  password: string;
-}
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [emailError, setEmailError] = useState<string>('');
+  const [passwordError, setPasswordError] = useState<string>('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data: LoginData = {
-      email,
-      password,
-    };
-    try {
-      const response = await LoginUser(data);
-      console.log(response);
-    } catch (error) {
-      console.error(error);
+
+    setEmailError('Invalid email');
+    setPasswordError('Invalid password');
+    let isFormValid = true;
+
+    if (!email) {
+      setEmailError('Email is required');
+      isFormValid = false;
+    }
+
+    if (!password) {
+      setPasswordError('Password is required');
+      isFormValid = false;
+    } else if (password.length < 8) {
+      setPasswordError('Password must be at least 8 characters');
+      isFormValid = false;
+    }
+
+    if (!mailRegex.test(email.trim().toLocaleLowerCase())) {
+      setEmailError('Email must be a valid stud.noroff.no email');
+      isFormValid = false;
+    }
+
+    if (isFormValid) {
+      try {
+        const result: { token?: string } = await LoginUser({
+          email: email.trim().toLocaleLowerCase(),
+          password,
+        });
+
+        if (result !== undefined && result.token) {
+          localStorage.setItem('accessToken', result.token);
+          alert('Login successful');
+          window.location.href = '/profile';
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Login failed');
+      }
     }
   };
 
@@ -39,6 +65,7 @@ const LoginForm: React.FC = () => {
           onChange={(e) => setEmail(e.target.value)}
           className="w-full rounded border border-gray-300 p-2"
         />
+        {emailError && <p className="text-red-500">{emailError}</p>}
       </label>
       <label htmlFor="password" className="text-lg font-semibold">
         Password
@@ -49,6 +76,7 @@ const LoginForm: React.FC = () => {
           onChange={(e) => setPassword(e.target.value)}
           className="w-full rounded border border-gray-300 p-2"
         />
+        {passwordError && <p className="text-red-500">{passwordError}</p>}
       </label>
       <button type="submit" className="rounded bg-blue-500 p-2 text-white">
         Login
@@ -56,3 +84,5 @@ const LoginForm: React.FC = () => {
     </form>
   );
 };
+
+export default LoginForm;
