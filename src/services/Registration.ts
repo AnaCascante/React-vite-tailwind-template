@@ -61,6 +61,7 @@ export const LoginUser = async (data: LoginData): Promise<LoginResponse> => {
       throw new Error('Network not responding');
     }
     const result: LoginResponse = await response.json();
+    console.log('API response:', result);
     return result;
   } catch (error) {
     console.error('Unable to Login', error);

@@ -1,5 +1,6 @@
 import { LoginUser, mailRegex } from '../../services/Registration';
 import React, { useState } from 'react';
+import { setLocalStorage } from '../../services/localStorage';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -17,6 +18,9 @@ const LoginForm: React.FC = () => {
     if (!email) {
       setEmailError('Email is required');
       isFormValid = false;
+    } else if (!mailRegex.test(email.trim().toLocaleLowerCase())) {
+      setEmailError('Email must be a valid stud.noroff.no email');
+      isFormValid = false;
     }
 
     if (!password) {
@@ -27,25 +31,26 @@ const LoginForm: React.FC = () => {
       isFormValid = false;
     }
 
-    if (!mailRegex.test(email.trim().toLocaleLowerCase())) {
-      setEmailError('Email must be a valid stud.noroff.no email');
-      isFormValid = false;
-    }
-
     if (isFormValid) {
       try {
-        const result: { token?: string } = await LoginUser({
+        // Log the object being sent to check its format
+        const loginData = {
           email: email.trim().toLocaleLowerCase(),
           password,
-        });
+        };
+        console.log('Sending login data:', loginData);
 
-        if (result !== undefined && result.token) {
-          localStorage.setItem('accessToken', result.token);
+        const result = await LoginUser(loginData);
+
+        if (result && result.token) {
+          setLocalStorage('accessToken', result.token);
           alert('Login successful');
           window.location.href = '/profile';
+        } else {
+          alert('Invalid email or password');
         }
       } catch (error) {
-        console.error(error);
+        console.error('Error during login', error);
         alert('Login failed');
       }
     }
