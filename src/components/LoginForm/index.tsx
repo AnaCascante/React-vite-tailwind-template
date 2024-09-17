@@ -11,8 +11,8 @@ const LoginForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setEmailError('Invalid email');
-    setPasswordError('Invalid password');
+    setEmailError('');
+    setPasswordError('');
     let isFormValid = true;
 
     if (!email) {
@@ -46,9 +46,7 @@ const LoginForm: React.FC = () => {
           setLocalStorage('accessToken', result.token);
           alert('Login successful');
           window.location.href = '/profile';
-        } else {
-          alert('Invalid email or password');
-        }
+        
       } catch (error) {
         console.error('Error during login', error);
         alert('Login failed');
