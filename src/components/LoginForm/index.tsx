@@ -46,7 +46,7 @@ const LoginForm: React.FC = () => {
           setLocalStorage('accessToken', result.token);
           alert('Login successful');
           window.location.href = '/profile';
-        
+        }
       } catch (error) {
         console.error('Error during login', error);
         alert('Login failed');
