@@ -4,6 +4,7 @@ import HomePage from '../../pages/HomePage';
 import VenuePage from '../../pages/VenuePage';
 import LoginPage from '../../pages/LoginPage';
 import RegisterPage from '../../pages/RegisterPage';
+import ProfilePage from '../../pages/ProfilePage';
 
 import Footer from '../Footer';
 
@@ -16,6 +17,7 @@ function AppTest() {
         <Route path="/venue/:id" element={<VenuePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
       <Footer />
     </Router>
