@@ -1,12 +1,14 @@
 import { LoginUser, mailRegex } from '../../services/Registration';
 import React, { useState } from 'react';
-import { setLocalStorage } from '../../services/localStorage';
+import { useNavigate } from 'react-router-dom';
+import { meLocalStorage, setLocalStorage } from '../../services/localStorage';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [emailError, setEmailError] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,8 +46,12 @@ const LoginForm: React.FC = () => {
 
         if (result && result.token) {
           setLocalStorage('accessToken', result.token);
+          console.log(
+            'Token stored in local storage:',
+            meLocalStorage('accessToken')
+          );
           alert('Login successful');
-          window.location.href = '/profile';
+          navigate('/profile');
         }
       } catch (error) {
         console.error('Error during login', error);
