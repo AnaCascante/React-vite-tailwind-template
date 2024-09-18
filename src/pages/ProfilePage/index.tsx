@@ -1,10 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { meLocalStorage } from '../../services/localStorage';
 
-const navigate = useNavigate();
-
 const ProfilePage: React.FC = () => {
   const token = meLocalStorage('accessToken');
+  const navigate = useNavigate();
 
   if (!token) {
     navigate('/login');
