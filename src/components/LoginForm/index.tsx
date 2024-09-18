@@ -44,14 +44,16 @@ const LoginForm: React.FC = () => {
 
         const result = await LoginUser(loginData);
 
-        if (result && result.token) {
-          setLocalStorage('accessToken', result.token);
+        if (result) {
+          // setLocalStorage('accessToken', result.token);
+          localStorage.setItem('accessToken', result.data.token);
+
           console.log(
             'Token stored in local storage:',
             meLocalStorage('accessToken')
           );
           alert('Login successful');
-          navigate('/profile');
+          navigate('/');
         }
       } catch (error) {
         console.error('Error during login', error);

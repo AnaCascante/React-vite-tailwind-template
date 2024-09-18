@@ -25,6 +25,8 @@ interface LoginData {
 
 interface LoginResponse {
   token?: string;
+  result?: any;
+  success?: boolean;
 }
 
 export const RegisterUser = async (data: UserData): Promise<void> => {
