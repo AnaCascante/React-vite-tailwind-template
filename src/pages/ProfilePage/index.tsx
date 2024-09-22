@@ -1,24 +1,83 @@
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { meLocalStorage } from '../../services/localStorage';
-// import react hooks
-// import createvenue
-// import updateprofile
-// import deletevenue
-// need the imports to be able to use the hooks and functions
+import {
+  meLocalStorage,
+  removeLocalStorage,
+} from '../../services/localStorage';
+import VenueList from '../../components/VenueList/VenueList'; // Adjust the path as necessary
+
+interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  banner: string;
+  avatar: string;
+  venueManager: boolean;
+  _count: {
+    booking: number;
+    venue: number;
+  };
+}
 
 const ProfilePage: React.FC = () => {
-  const token = meLocalStorage('accessToken');
+  const [role, setRole] = useState<string | null>(null);
+  const [user, setUser] = useState<UserProfile | null>(null);
   const navigate = useNavigate();
 
-  if (!token) {
-    navigate('/login');
-    return null;
+  useEffect(() => {
+    const storedRole = meLocalStorage('role');
+    const storedUser = meLocalStorage('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+    if (!storedRole) {
+      navigate('/login');
+      return;
+    }
+    if (!role || !user) {
+      setRole(storedRole);
+    }
+  }, [navigate]);
+
+  if (!role) {
+    return <div>Loading...</div>;
   }
 
   return (
     <div>
-      <h1>Welcome to your profile</h1>
-      {/* Profile content here */}
+      <img src={user?.banner} alt="Profile Banner" />
+      <img src={user?.avatar} alt="Profile Avatar" />
+
+      <h1>Name: {user?.name}</h1>
+      <p>Email: {user?.email}</p>
+
+      {!user?.venueManager && (
+        <button onClick={() => navigate('/admin')}>
+          Become a Venue Manager
+        </button>
+      )}
+
+      <p>Bookings: {user?._count.booking}</p>
+      <p>Venues: {user?._count.venue}</p>
+
+      {user?.venueManager && (
+        <div>
+          <h2>Your Venues</h2>
+          <VenueList userId={user.id} />
+          <button>Create New Venue</button>
+        </div>
+      )}
+
+      <button
+        onClick={() => {
+          removeLocalStorage('token');
+          removeLocalStorage('role');
+          removeLocalStorage('user');
+          navigate('/login');
+        }}
+      >
+        Logout
+      </button>
     </div>
   );
 };
