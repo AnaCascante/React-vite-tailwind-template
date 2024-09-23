@@ -4,7 +4,7 @@ import {
   meLocalStorage,
   removeLocalStorage,
 } from '../../services/localStorage';
-import VenueList from '../../components/VenueList/VenueList'; // Adjust the path as necessary
+import VenueList from '../../components/VenueList'; // Adjust the path as necessary
 
 interface UserProfile {
   id: string;
@@ -63,7 +63,7 @@ const ProfilePage: React.FC = () => {
       {user?.venueManager && (
         <div>
           <h2>Your Venues</h2>
-          <VenueList userId={user.id} />
+          <VenueList userId={user.id} venues={[]} />
           <button>Create New Venue</button>
         </div>
       )}
