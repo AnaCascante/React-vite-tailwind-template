@@ -1,7 +1,8 @@
 import { LoginUser, mailRegex } from '../../services/Registration';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { meLocalStorage, setLocalStorage } from '../../services/localStorage';
+import { meLocalStorage } from '../../services/localStorage';
+// import { setLocalStorage  may be needed for the login token
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -44,14 +45,20 @@ const LoginForm: React.FC = () => {
 
         const result = await LoginUser(loginData);
 
-        if (result && result.token) {
-          setLocalStorage('accessToken', result.token);
+        if (result) {
+          // setLocalStorage('accessToken', result.token);
+          if (result.token) {
+            localStorage.setItem('accessToken', result.token);
+          } else {
+            throw new Error('Token is undefined');
+          }
+
           console.log(
             'Token stored in local storage:',
             meLocalStorage('accessToken')
           );
           alert('Login successful');
-          navigate('/profile');
+          navigate('/');
         }
       } catch (error) {
         console.error('Error during login', error);

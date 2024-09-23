@@ -1,4 +1,5 @@
-export const BaseUrl = 'https://v2.api.noroff.dev';
+import { BaseUrl } from './ApiUrl';
+
 export const mailRegex = /^[a-zA-Z0-9._%+-]+@stud.noroff\.no$/;
 export const API_KEY = import.meta.env.VITE_API_KEY;
 
@@ -25,6 +26,8 @@ interface LoginData {
 
 interface LoginResponse {
   token?: string;
+  result?: any;
+  success?: boolean;
 }
 
 export const RegisterUser = async (data: UserData): Promise<void> => {
