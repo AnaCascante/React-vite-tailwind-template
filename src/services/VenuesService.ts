@@ -56,7 +56,7 @@ export const FetchVenues = async (): Promise<Venue[]> => {
 };
 
 export const FetchVenueById = async (id: string): Promise<Venue> => {
-  const response = await fetch(ApiUrls.Venue + id);
+  const response = await fetch(ApiUrls.Venues + `/${id}`);
   if (!response.ok) {
     throw new Error('Network not responding');
   }
