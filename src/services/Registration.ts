@@ -1,9 +1,9 @@
-import { BaseUrl } from './ApiUrl';
+import { ApiUrls } from './ApiUrl';
 
 export const mailRegex = /^[a-zA-Z0-9._%+-]+@stud.noroff\.no$/;
 export const API_KEY = import.meta.env.VITE_API_KEY;
 
-interface UserData {
+export interface UserData {
   name: string;
   email: string;
   password: string;
@@ -19,26 +19,28 @@ interface UserData {
   venueManager: boolean;
 }
 
-interface LoginData {
+export interface LoginData {
   email: string;
   password: string;
 }
 
-interface LoginResponse {
+export interface LoginResponse {
   token?: string;
+  user?: UserData;
   result?: any;
   success?: boolean;
 }
 
 export const RegisterUser = async (data: UserData): Promise<void> => {
   try {
-    const response = await fetch(`${BaseUrl}/auth/register`, {
+    const response = await fetch(ApiUrls.Register, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     });
+
     if (!response.ok) {
       throw new Error('Network not responding');
     }
@@ -51,7 +53,7 @@ export const RegisterUser = async (data: UserData): Promise<void> => {
 
 export const LoginUser = async (data: LoginData): Promise<LoginResponse> => {
   try {
-    const response = await fetch(`${BaseUrl}/auth/login`, {
+    const response = await fetch(ApiUrls.Login, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -60,6 +62,7 @@ export const LoginUser = async (data: LoginData): Promise<LoginResponse> => {
 
       body: JSON.stringify(data),
     });
+    console.log('API response:', response);
     if (!response.ok) {
       throw new Error('Network not responding');
     }

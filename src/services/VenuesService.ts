@@ -1,3 +1,5 @@
+import { ApiUrls } from './ApiUrl';
+
 export interface MetaData {
   wifi?: boolean;
   parking?: boolean;
@@ -40,7 +42,7 @@ export interface Venue {
 }
 
 export const FetchVenues = async (): Promise<Venue[]> => {
-  const response = await fetch('https://v2.api.noroff.dev/holidaze/venues');
+  const response = await fetch(ApiUrls.Venues);
   if (!response.ok) {
     throw new Error('Network not responding');
   }
@@ -54,9 +56,7 @@ export const FetchVenues = async (): Promise<Venue[]> => {
 };
 
 export const FetchVenueById = async (id: string): Promise<Venue> => {
-  const response = await fetch(
-    `https://v2.api.noroff.dev/holidaze/venues/${id}`
-  );
+  const response = await fetch(ApiUrls.Venue + id);
   if (!response.ok) {
     throw new Error('Network not responding');
   }
