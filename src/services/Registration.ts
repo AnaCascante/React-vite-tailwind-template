@@ -34,6 +34,17 @@ export interface LoginResponse {
   venueManager?: boolean;
 }
 
+export interface RegisterResponse {
+  data: {
+    accessToken?: string;
+    token?: string;
+    user?: UserData;
+    result?: any;
+    success?: boolean;
+    venueManager?: boolean;
+  };
+}
+
 export const RegisterUser = async (data: UserData): Promise<void> => {
   try {
     const response = await fetch(ApiUrls.Register, {

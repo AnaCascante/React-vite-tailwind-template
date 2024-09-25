@@ -1,27 +1,62 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RegisterUser, mailRegex } from '../../services/Registration';
+import {
+  RegisterUser,
+  mailRegex,
+  RegisterResponse,
+} from '../../services/Registration';
 import { setLocalStorage } from '../../services/localStorage';
 
 const SignUpForm: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [avatar, setAvatar] = useState<string>('');
+  const [banner, setBanner] = useState<string>('');
   const [venueManager, setVenueManager] = useState<boolean>(false);
   const [nameError, setNameError] = useState<string>('');
   const [emailError, setEmailError] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState<string>('');
+  const [avatarError, setAvatarError] = useState<string>('');
+  const [bannerError, setBannerError] = useState<string>('');
   const navigate = useNavigate();
+
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+      case 'email':
+        setEmail(value);
+        break;
+      case 'password':
+        setPassword(value);
+        break;
+      case 'avatar':
+        setAvatar(value);
+        break;
+      case 'banner':
+        setBanner(value);
+        break;
+      default:
+        break;
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    setNameError('');
     setEmailError('');
     setPasswordError('');
-    setConfirmPasswordError('');
+
     let isFormValid = true;
+
+    if (!name) {
+      setNameError('Name is required');
+      isFormValid = false;
+    }
 
     if (!email) {
       setEmailError('Email is required');
@@ -39,11 +74,13 @@ const SignUpForm: React.FC = () => {
       isFormValid = false;
     }
 
-    if (!confirmPassword) {
-      setConfirmPasswordError('Please confirm your password');
+    if (!avatar) {
+      setAvatarError('Avatar is required');
       isFormValid = false;
-    } else if (password !== confirmPassword) {
-      setConfirmPasswordError('Passwords do not match');
+    }
+
+    if (!banner) {
+      setBannerError('Banner is required');
       isFormValid = false;
     }
 
@@ -59,12 +96,12 @@ const SignUpForm: React.FC = () => {
           venueManager,
         };
 
-        const result = await RegisterUser(registerData);
+        const result: RegisterResponse = await RegisterUser(registerData);
 
         console.log('Register response:', result);
 
-        if (result && (result as any).data) {
-          const data = (result as any).data;
+        if (result) {
+          const data = result.data;
           setLocalStorage('token', data.accessToken);
           setLocalStorage('user', JSON.stringify(data));
           setLocalStorage('venueManager', data.venueManager);
@@ -117,15 +154,30 @@ const SignUpForm: React.FC = () => {
       />
       {passwordError && <p className="text-xs text-red-500">{passwordError}</p>}
       <input
-        type="password"
-        placeholder="Confirm Password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
+        type="text"
+        placeholder="Avatar"
+        value={avatar}
+        onChange={(e) => setAvatar(e.target.value)}
         className="mb-2 rounded border border-gray-300 p-2"
       />
-      {confirmPasswordError && (
-        <p className="text-xs text-red-500">{confirmPasswordError}</p>
-      )}
+      {avatarError && <p className="text-xs text-red-500">{avatarError}</p>}
+      <input
+        type="text"
+        placeholder="Banner"
+        value={banner}
+        onChange={(e) => setBanner(e.target.value)}
+        className="mb-2 rounded border border-gray-300 p-2"
+      />
+      {bannerError && <p className="text-xs text-red-500">{bannerError}</p>}
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="mb-2 rounded border border-gray-300 p-2"
+      />
+      {passwordError && <p className="text-xs text-red-500">{passwordError}</p>}
+
       <label className="mb-4 flex items-center">
         <input
           type="checkbox"
