@@ -32,6 +32,7 @@ const Navbar = () => {
               </NavLink>
             </li>
           ) : (
+            // Add logout button here
             <>
               <li>
                 <NavLink to="/login" className="text-secondary">

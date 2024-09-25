@@ -2,7 +2,7 @@ import { LoginUser, mailRegex } from '../../services/Registration';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { setLocalStorage, meLocalStorage } from '../../services/localStorage';
-import { UseAuth } from '../../contexts/AuthContext';
+//import { UseAuth } from '../../contexts/AuthContext';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>('');
