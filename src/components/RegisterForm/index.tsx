@@ -34,14 +34,13 @@ const SignUpForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setErrors((prevErrors) => ({
-      ...prevErrors,
+    setErrors({
       nameError: '',
       emailError: '',
       passwordError: '',
       avatarError: '',
       bannerError: '',
-    }));
+    });
 
     let isFormValid = true;
 
@@ -104,8 +103,8 @@ const SignUpForm: React.FC = () => {
           email: formData.email.trim().toLocaleLowerCase(),
           password: formData.password,
           bio: '',
-          avatar: { url: '', alt: '' },
-          banner: { url: '', alt: '' },
+          avatar: { url: formData.avatar, alt: '' },
+          banner: { url: formData.banner, alt: '' },
           venueManager: formData.venueManager,
         };
 
@@ -201,6 +200,7 @@ const SignUpForm: React.FC = () => {
       <label className="mb-4 flex items-center">
         <input
           type="checkbox"
+          name="venueManager"
           checked={formData.venueManager}
           onChange={handleInput}
           className="mr-2"

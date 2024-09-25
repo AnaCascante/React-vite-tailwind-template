@@ -58,12 +58,12 @@ export const RegisterUser = async (
     });
 
     if (!response.ok) {
-      throw new Error('Network not responding');
+      throw new Error('HTTP error, status = ' + response.status);
     }
     const result = await response.json();
     return result;
   } catch (error) {
-    console.error(error);
+    console.error('Failed registration', error);
     return {
       data: {
         success: false,
@@ -72,6 +72,8 @@ export const RegisterUser = async (
     };
   }
 };
+
+console.log('RegisterUser', RegisterUser);
 
 export const LoginUser = async (data: LoginData): Promise<LoginResponse> => {
   try {
