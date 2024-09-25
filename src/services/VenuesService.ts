@@ -68,3 +68,5 @@ try {
 } catch (error) {
   console.error(error);
 }
+
+// fetch med auth til profile med token og key

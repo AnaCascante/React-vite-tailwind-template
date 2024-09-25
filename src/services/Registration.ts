@@ -25,10 +25,13 @@ export interface LoginData {
 }
 
 export interface LoginResponse {
+  data?: any;
+  accessToken?: string;
   token?: string;
   user?: UserData;
   result?: any;
   success?: boolean;
+  venueManager?: boolean;
 }
 
 export const RegisterUser = async (data: UserData): Promise<void> => {
@@ -62,12 +65,12 @@ export const LoginUser = async (data: LoginData): Promise<LoginResponse> => {
 
       body: JSON.stringify(data),
     });
-    console.log('API response:', response);
+
     if (!response.ok) {
       throw new Error('Network not responding');
     }
     const result: LoginResponse = await response.json();
-    console.log('API response:', result);
+
     return result;
   } catch (error) {
     console.error('Unable to Login', error);
