@@ -1,8 +1,8 @@
 import { LoginUser, mailRegex } from '../../services/Registration';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { meLocalStorage } from '../../services/localStorage';
-// import { setLocalStorage  may be needed for the login token
+import { setLocalStorage, meLocalStorage } from '../../services/localStorage';
+//import { UseAuth } from '../../contexts/AuthContext';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -10,6 +10,7 @@ const LoginForm: React.FC = () => {
   const [emailError, setEmailError] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
   const navigate = useNavigate();
+  //const { login } = UseAuth(); // Get login function from AuthContext
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,30 +37,31 @@ const LoginForm: React.FC = () => {
 
     if (isFormValid) {
       try {
-        // Log the object being sent to check its format
         const loginData = {
           email: email.trim().toLocaleLowerCase(),
           password,
         };
-        console.log('Sending login data:', loginData);
 
         const result = await LoginUser(loginData);
 
+        console.log('Login response:', result);
+
         if (result) {
-          // setLocalStorage('accessToken', result.token);
-          if (result.token) {
-            localStorage.setItem('accessToken', result.token);
-          } else {
-            throw new Error('Token is undefined');
-          }
+          setLocalStorage('token', result.data.accessToken);
+          setLocalStorage('user', JSON.stringify(result.data));
+          setLocalStorage('venueManager', result.data.venueManager);
 
           console.log(
             'Token stored in local storage:',
-            meLocalStorage('accessToken')
+            meLocalStorage('token')
           );
+
           alert('Login successful');
-          navigate('/');
+          navigate('/profile');
+        } else {
+          throw new Error('Invalid login response');
         }
+        return result;
       } catch (error) {
         console.error('Error during login', error);
         alert('Login failed');

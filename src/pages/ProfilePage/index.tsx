@@ -4,7 +4,7 @@ import {
   meLocalStorage,
   removeLocalStorage,
 } from '../../services/localStorage';
-import VenueList from '../../components/VenueList'; // Adjust the path as necessary
+import VenueList from '../../components/VenueList';
 
 interface UserProfile {
   id: string;
@@ -25,17 +25,16 @@ const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedRole = meLocalStorage('role');
     const storedUser = meLocalStorage('user');
+    const storedRole = meLocalStorage('role');
+    console.log('storedRole', storedRole);
+    console.log('storedUser', storedUser);
+
     if (storedUser) {
       setUser(JSON.parse(storedUser));
-    }
-    if (!storedRole) {
-      navigate('/login');
-      return;
-    }
-    if (!role || !user) {
-      setRole(storedRole);
+      setRole(meLocalStorage('role'));
+    } else {
+      navigate('/login'); // Redirect only if no user is found
     }
   }, [navigate]);
 

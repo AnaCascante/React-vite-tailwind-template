@@ -34,7 +34,7 @@ const VenuePage: React.FC = () => {
         country={venue.location.country}
         price={venue.price}
         rating={venue.rating}
-        isDetailed={false}
+        isDetailed={true}
       />
     </div>
   );
