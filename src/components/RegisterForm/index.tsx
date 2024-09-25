@@ -1,106 +1,119 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  RegisterUser,
-  mailRegex,
-  RegisterResponse,
-} from '../../services/Registration';
+import { RegisterUser, mailRegex } from '../../services/Registration';
 import { setLocalStorage } from '../../services/localStorage';
 
 const SignUpForm: React.FC = () => {
-  const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [avatar, setAvatar] = useState<string>('');
-  const [banner, setBanner] = useState<string>('');
-  const [venueManager, setVenueManager] = useState<boolean>(false);
-  const [nameError, setNameError] = useState<string>('');
-  const [emailError, setEmailError] = useState<string>('');
-  const [passwordError, setPasswordError] = useState<string>('');
-  const [avatarError, setAvatarError] = useState<string>('');
-  const [bannerError, setBannerError] = useState<string>('');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    avatar: '',
+    banner: '',
+    venueManager: false,
+  });
+
+  const [errors, setErrors] = useState({
+    nameError: '',
+    emailError: '',
+    passwordError: '',
+    avatarError: '',
+    bannerError: '',
+  });
+
   const navigate = useNavigate();
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'email':
-        setEmail(value);
-        break;
-      case 'password':
-        setPassword(value);
-        break;
-      case 'avatar':
-        setAvatar(value);
-        break;
-      case 'banner':
-        setBanner(value);
-        break;
-      default:
-        break;
-    }
+    const { name, value, type, checked } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setNameError('');
-    setEmailError('');
-    setPasswordError('');
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      nameError: '',
+      emailError: '',
+      passwordError: '',
+      avatarError: '',
+      bannerError: '',
+    }));
 
     let isFormValid = true;
 
-    if (!name) {
-      setNameError('Name is required');
+    if (!formData.name) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        nameError: 'Name is required',
+      }));
       isFormValid = false;
     }
 
-    if (!email) {
-      setEmailError('Email is required');
+    if (!formData.email) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        emailError: 'Email is required',
+      }));
       isFormValid = false;
-    } else if (!mailRegex.test(email.trim().toLocaleLowerCase())) {
-      setEmailError('Email must be a valid stud.noroff.no email');
-      isFormValid = false;
-    }
-
-    if (!password) {
-      setPasswordError('Password is required');
-      isFormValid = false;
-    } else if (password.length < 8) {
-      setPasswordError('Password must be at least 8 characters');
+    } else if (!mailRegex.test(formData.email.trim().toLocaleLowerCase())) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        emailError: 'Email must be a valid stud.noroff.no email',
+      }));
       isFormValid = false;
     }
 
-    if (!avatar) {
-      setAvatarError('Avatar is required');
+    if (!formData.password) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        passwordError: 'Password is required',
+      }));
+      isFormValid = false;
+    } else if (formData.password.length < 8) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        passwordError: 'Password must be at least 8 characters',
+      }));
       isFormValid = false;
     }
 
-    if (!banner) {
-      setBannerError('Banner is required');
+    if (!formData.avatar) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        avatarError: 'Avatar is required',
+      }));
+      isFormValid = false;
+    }
+
+    if (!formData.banner) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        bannerError: 'Banner is required',
+      }));
       isFormValid = false;
     }
 
     if (isFormValid) {
       try {
         const registerData = {
-          name: name.trim(),
-          email: email.trim().toLocaleLowerCase(),
-          password,
+          name: formData.name.trim(),
+          email: formData.email.trim().toLocaleLowerCase(),
+          password: formData.password,
           bio: '',
           avatar: { url: '', alt: '' },
           banner: { url: '', alt: '' },
-          venueManager,
+          venueManager: formData.venueManager,
         };
 
-        const result: RegisterResponse = await RegisterUser(registerData);
-
-        console.log('Register response:', result);
+        const result = await RegisterUser(registerData);
 
         if (result) {
+          console.log('Register response:', result);
+
           const data = result.data;
           setLocalStorage('token', data.accessToken);
           setLocalStorage('user', JSON.stringify(data));
@@ -132,57 +145,64 @@ const SignUpForm: React.FC = () => {
       <input
         type="text"
         placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={formData.name}
+        onChange={handleInput}
+        name="name"
         className="mb-2 rounded border border-gray-300 p-2"
       />
-      {nameError && <p className="text-xs text-red-500">{nameError}</p>}
+      {errors.nameError && (
+        <p className="text-xs text-red-500">{errors.nameError}</p>
+      )}
       <input
         type="email"
         placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={formData.email}
+        onChange={handleInput}
+        name="email"
         className="mb-2 rounded border border-gray-300 p-2"
       />
-      {emailError && <p className="text-xs text-red-500">{emailError}</p>}
+      {errors.emailError && (
+        <p className="text-xs text-red-500">{errors.emailError}</p>
+      )}
       <input
         type="password"
         placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={formData.password}
+        onChange={handleInput}
+        name="password"
         className="mb-2 rounded border border-gray-300 p-2"
       />
-      {passwordError && <p className="text-xs text-red-500">{passwordError}</p>}
+      {errors.passwordError && (
+        <p className="text-xs text-red-500">{errors.passwordError}</p>
+      )}
       <input
         type="text"
         placeholder="Avatar"
-        value={avatar}
-        onChange={(e) => setAvatar(e.target.value)}
+        value={formData.avatar}
+        onChange={handleInput}
+        name="avatar"
         className="mb-2 rounded border border-gray-300 p-2"
       />
-      {avatarError && <p className="text-xs text-red-500">{avatarError}</p>}
+      {errors.avatarError && (
+        <p className="text-xs text-red-500">{errors.avatarError}</p>
+      )}
       <input
         type="text"
         placeholder="Banner"
-        value={banner}
-        onChange={(e) => setBanner(e.target.value)}
+        value={formData.banner}
+        onChange={handleInput}
+        name="banner"
         className="mb-2 rounded border border-gray-300 p-2"
       />
-      {bannerError && <p className="text-xs text-red-500">{bannerError}</p>}
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="mb-2 rounded border border-gray-300 p-2"
-      />
-      {passwordError && <p className="text-xs text-red-500">{passwordError}</p>}
+      {errors.bannerError && (
+        <p className="text-xs text-red-500">{errors.bannerError}</p>
+      )}
 
       <label className="mb-4 flex items-center">
         <input
           type="checkbox"
-          checked={venueManager}
-          onChange={(e) => setVenueManager(e.target.checked)}
+          checked={formData.venueManager}
+          onChange={handleInput}
           className="mr-2"
         />
         <span>Register as Venue Manager</span>

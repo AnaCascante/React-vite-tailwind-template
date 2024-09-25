@@ -45,7 +45,9 @@ export interface RegisterResponse {
   };
 }
 
-export const RegisterUser = async (data: UserData): Promise<void> => {
+export const RegisterUser = async (
+  data: UserData
+): Promise<RegisterResponse> => {
   try {
     const response = await fetch(ApiUrls.Register, {
       method: 'POST',
@@ -62,6 +64,12 @@ export const RegisterUser = async (data: UserData): Promise<void> => {
     return result;
   } catch (error) {
     console.error(error);
+    return {
+      data: {
+        success: false,
+        result: null,
+      },
+    };
   }
 };
 
