@@ -41,24 +41,32 @@ const VenuePage: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-wrap gap-4 p-4">
-      <VenueCard
-        key={venue.id}
-        id={venue.id}
-        name={venue.name}
-        media={venue.media}
-        city={venue.location.city}
-        country={venue.location.country}
-        price={venue.price}
-        rating={venue.rating}
-        isDetailed={true}
-      />
+    <div className="mx-auto flex min-h-screen flex-col items-center justify-center p-4 md:p-8 lg:p-12">
+      <div className="mx-auto flex w-full max-w-xs flex-col items-center justify-center sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
+        <VenueCard
+          key={venue.id}
+          id={venue.id}
+          name={venue.name}
+          media={venue.media}
+          city={venue.location.city}
+          country={venue.location.country}
+          price={venue.price}
+          rating={venue.rating}
+          isDetailed={true}
+        />
+      </div>
       <div
-        className="Calendar-toggle Calendar-container flex cursor-pointer flex-col items-center justify-center rounded-lg p-4 shadow-lg"
+        className={`Calendar-toggle Calendar-container flex cursor-pointer flex-col items-center justify-center rounded-lg p-4 shadow-lg transition-all duration-300 ${
+          showCalendar
+            ? 'mt-6 w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl'
+            : 'w-auto'
+        }`}
         onClick={toggleCalendar}
       >
-        <span className="ml-2">Book your stay</span>
-        <FcCalendar size={40} />
+        <span className="ml-2 text-lg font-bold text-primary underline">
+          Book your stay
+        </span>
+        <FcCalendar size={50} />
 
         {showCalendar && (
           <div className={showCalendar ? 'block' : 'hidden'}>
@@ -72,7 +80,7 @@ const VenuePage: React.FC = () => {
                 }
               }}
             />
-            <button className="mt-4 w-full rounded bg-primary py-2 text-white">
+            <button className="mx-auto mt-4 flex items-center justify-center rounded bg-primary p-4 py-2 text-lg font-bold text-secondary">
               Book now
             </button>
           </div>
