@@ -69,17 +69,20 @@ const VenuePage: React.FC = () => {
         <FcCalendar size={50} />
 
         {showCalendar && (
-          <div className={showCalendar ? 'block' : 'hidden'}>
-            <Calendar
-              onChange={(value) => handleDateChange(value as Date | Date[])}
-              value={selectedDate}
-              selectRange={true}
-              tileClassName={({ date }) => {
-                if (date.getDay() === 0 || date.getDay() === 6) {
-                  return 'bg-red-200';
-                }
-              }}
-            />
+          <div className="mt-4 block w-full">
+            <div className="overflow-hidden rounded-lg">
+              <Calendar
+                onChange={(value) => handleDateChange(value as Date | Date[])}
+                value={selectedDate}
+                selectRange={true}
+                tileClassName={({ date }) => {
+                  if (date.getDay() === 0 || date.getDay() === 6) {
+                    return 'bg-red-200';
+                  }
+                }}
+                className="w-full"
+              />
+            </div>
             <button className="mx-auto mt-4 flex items-center justify-center rounded bg-primary p-4 py-2 text-lg font-bold text-secondary">
               Book now
             </button>
