@@ -124,7 +124,7 @@ const SignUpForm: React.FC = () => {
           );
 
           alert('Registration successful');
-          navigate('/profile');
+          navigate('/login');
         } else {
           alert('Registration failed');
         }
