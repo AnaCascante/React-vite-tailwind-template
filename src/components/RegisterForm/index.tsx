@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RegisterUser, mailRegex } from '../../services/Registration';
-import { setLocalStorage } from '../../services/localStorage';
 
 const SignUpForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -112,16 +111,6 @@ const SignUpForm: React.FC = () => {
 
         if (result) {
           console.log('Register response:', result);
-
-          /*const data = result.data;
-          setLocalStorage('token', data.accessToken);
-          setLocalStorage('user', JSON.stringify(data));
-          setLocalStorage('venueManager', data.venueManager);
-
-          console.log(
-            'Token stored in local storage:',
-            localStorage.getItem('token')
-          );*/
 
           alert('Registration successful');
           navigate('/login');

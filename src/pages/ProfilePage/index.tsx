@@ -30,6 +30,12 @@ const ProfilePage: React.FC = () => {
 
     console.log('storedRole', storedRole);
     console.log('storedUser', storedUser);
+    if (storedRole) {
+      setRole(storedRole);
+    }
+    if (storedUser) {
+      setUser(storedUser);
+    }
   }, [navigate]);
 
   if (!role) {
