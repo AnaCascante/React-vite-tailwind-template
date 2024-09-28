@@ -1,4 +1,5 @@
 import { ApiUrls } from './ApiUrl';
+import { API_KEY } from './Registration';
 // import { QueryBooking, QueryCustomer, QueryOwner } from './Queries';
 
 export interface BookingData {
@@ -29,10 +30,17 @@ export const BookVenue = async (booking: BookingData): Promise<BookingData> => {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
+        'X-Noroff-API-Key': API_KEY,
       },
       body: JSON.stringify(booking),
     });
+
+    console.log('response status:', response.status);
+    const responseBody = await response.json();
+    console.log('response body:', responseBody);
+
     if (!response.ok) {
+      console.error('Response not ok:', responseBody);
       throw Error('Failed to book venue');
     }
     return await response.json();
@@ -80,6 +88,7 @@ export const BookVenue = async (booking: BookingData): Promise<BookingData> => {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
+        'X-Noroff-API-Key': API_KEY,
       },
     });
     if (!response.ok) {
@@ -104,6 +113,7 @@ export const createBooking = async (
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
+        'X-Noroff-API-Key': API_KEY,
       },
       body: JSON.stringify(booking),
     });
@@ -130,6 +140,7 @@ export const updateBooking = async (
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
+        'X-Noroff-API-Key': API_KEY,
       },
       body: JSON.stringify(booking),
     });
@@ -153,6 +164,7 @@ export const DeleteBooking = async (id: string): Promise<void> => {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
+        'X-Noroff-API-Key': API_KEY,
       },
     });
     if (!response.ok) {

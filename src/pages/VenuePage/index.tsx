@@ -44,16 +44,20 @@ const VenuePage: React.FC = () => {
       return;
     }
 
-    const dateFrom = Array.isArray(selectedDate)
+    /*const dateFrom = Array.isArray(selectedDate)
       ? selectedDate[0]
       : selectedDate;
-    const dateTo = Array.isArray(selectedDate) ? selectedDate[1] : selectedDate;
+    const dateTo = Array.isArray(selectedDate) ? selectedDate[1] : selectedDate;*/
+
+    const [dateFrom, dateTo] = Array.isArray(selectedDate)
+      ? selectedDate
+      : [selectedDate, selectedDate];
 
     const bookingData = {
       datoFrom: dateFrom.toISOString(),
       datoTo: dateTo.toISOString(),
       guests: 1,
-      id: venue.id,
+      id: id,
     };
 
     console.log('Booking data:', bookingData);
