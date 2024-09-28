@@ -65,7 +65,15 @@ const VenueCard: React.FC<VenueCardProps> = ({
         )}
         {isDetailed && description && <p>{description}</p>}
       </div>
-      <Link to={`/venue/${id}`}>View Venue</Link>
+      <>
+        {isDetailed ? (
+          <label className="absolute bottom-4 right-4 rounded-lg bg-secondary p-2 text-primary">
+            Number of Guests: <input type="number" min="1" max="10" />
+          </label>
+        ) : (
+          <Link to={`/venue/${id}`}>View Venue</Link>
+        )}
+      </>
     </div>
   );
 };
