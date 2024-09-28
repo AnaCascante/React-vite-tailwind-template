@@ -47,11 +47,13 @@ const VenuePage: React.FC = () => {
           key={venue.id}
           id={venue.id}
           name={venue.name}
+          description={venue.description}
           media={venue.media}
           city={venue.location.city}
           country={venue.location.country}
           price={venue.price}
           rating={venue.rating}
+          meta={venue.meta}
           isDetailed={true}
         />
       </div>

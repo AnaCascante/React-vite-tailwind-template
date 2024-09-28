@@ -12,7 +12,7 @@ interface VenueCardProps {
   country: string;
   price: number;
   rating: number;
-  metaData?: MetaData;
+  meta?: MetaData;
   isDetailed?: boolean;
 }
 
@@ -25,9 +25,11 @@ const VenueCard: React.FC<VenueCardProps> = ({
   country,
   price,
   rating,
-  metaData,
+  meta,
   isDetailed,
 }) => {
+  console.log('Meta Data:', meta);
+  console.log('isDetailed:', isDetailed);
   const mediaItem = media && media.length > 0 ? media[0] : null;
 
   return (
@@ -48,22 +50,23 @@ const VenueCard: React.FC<VenueCardProps> = ({
 
       <div className="p-4">
         <h2 className="text-lg font-bold">{name}</h2>
-        <p className="text-sm">{description}</p>
+        {isDetailed && description && (
+          <p>{description || 'No description available'}</p>
+        )}
         <p className="text-sm">
-          {city}, {country}
+          {city || 'Not specified'}, {country || 'Not specified'}
         </p>
         <p className="text-sm">Price: ${price}</p>
         <p className="text-sm">Rating: {rating}</p>
 
-        {isDetailed && metaData && (
+        {isDetailed && meta && (
           <>
-            {metaData.wifi && <p>Gratis Wifi</p>}
-            {metaData.parking && <p>Gratis parking</p>}
-            {metaData.breakfast && <p>Breakfast included</p>}
-            {metaData.pets && <p>Pets allowed</p>}
+            {meta.wifi && <p>Gratis Wifi</p>}
+            {meta.parking && <p>Gratis parking</p>}
+            {meta.breakfast && <p>Breakfast included</p>}
+            {meta.pets && <p>Pets allowed</p>}
           </>
         )}
-        {isDetailed && description && <p>{description}</p>}
       </div>
       <>
         {isDetailed ? (

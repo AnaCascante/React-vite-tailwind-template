@@ -36,7 +36,7 @@ export interface Venue {
   rating: number;
   created: string;
   updated: string;
-  metaData: MetaData;
+  meta: MetaData;
   location: Location;
   _count: Count;
 }
