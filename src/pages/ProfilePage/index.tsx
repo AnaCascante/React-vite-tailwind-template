@@ -27,15 +27,9 @@ const ProfilePage: React.FC = () => {
   useEffect(() => {
     const storedUser = meLocalStorage('user');
     const storedRole = meLocalStorage('role');
+
     console.log('storedRole', storedRole);
     console.log('storedUser', storedUser);
-
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-      setRole(meLocalStorage('role'));
-    } else {
-      navigate('/login'); // Redirect only if no user is found
-    }
   }, [navigate]);
 
   if (!role) {
