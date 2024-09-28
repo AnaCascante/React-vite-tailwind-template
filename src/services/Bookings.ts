@@ -1,9 +1,9 @@
-import { ApiUrls } from './ApiUrl';
+import { ApiUrls, BaseUrl } from './ApiUrl';
 import { API_KEY } from './Registration';
 // import { QueryBooking, QueryCustomer, QueryOwner } from './Queries';
 
 export interface BookingData {
-  id?: string;
+  venueId?: string;
   datoFrom: string;
   datoTo: string;
   guests: number;
@@ -24,17 +24,24 @@ export interface BookingQuery {
 
 export const BookVenue = async (booking: BookingData): Promise<BookingData> => {
   const token = localStorage.getItem('token');
+  const id = booking.venueId; // Assuming venueId is the id needed
+  if (!id) {
+    throw new Error('venueId is required');
+  }
   try {
-    const response = await fetch(ApiUrls.Bookings, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-        'X-Noroff-API-Key': API_KEY,
-      },
-      body: JSON.stringify(booking),
-    });
-
+    const response = await fetch(
+      `https://v2.api.noroff.dev/holidaze/bookings`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          'X-Noroff-API-Key': API_KEY,
+        },
+        body: JSON.stringify(booking),
+      }
+    );
+    console.log('apikey', API_KEY);
     console.log('response status:', response.status);
     const responseBody = await response.json();
     console.log('response body:', responseBody);

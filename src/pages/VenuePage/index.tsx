@@ -15,6 +15,8 @@ const VenuePage: React.FC = () => {
   );
   const [showCalendar, setShowCalendar] = useState(false);
 
+  const token = localStorage.getItem('token');
+
   const handleDateChange = (date: Date | Date[]) => {
     if (Array.isArray(date)) {
       setSelectedDate(date as [Date, Date]);
@@ -40,6 +42,13 @@ const VenuePage: React.FC = () => {
   }, [id]);
 
   const handleBooking = async () => {
+    if (!token) {
+      alert(
+        'You need to be a registered user to book a venue. Please log in or register.'
+      );
+      return;
+    }
+
     if (!venue || !selectedDate) {
       return;
     }
@@ -57,7 +66,7 @@ const VenuePage: React.FC = () => {
       datoFrom: dateFrom.toISOString(),
       datoTo: dateTo.toISOString(),
       guests: 1,
-      id: id,
+      venueId: id,
     };
 
     console.log('Booking data:', bookingData);
