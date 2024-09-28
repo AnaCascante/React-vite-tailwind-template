@@ -10,12 +10,18 @@ interface UserProfile {
   id: string;
   name: string;
   email: string;
-  banner: string;
-  avatar: string;
+  banner: {
+    url: string;
+    alt: string;
+  };
+  avatar: {
+    url: string;
+    alt: string;
+  };
   venueManager: boolean;
-  _count: {
-    booking: number;
-    venue: number;
+  _count?: {
+    booking?: number;
+    venue?: number;
   };
 }
 
@@ -27,39 +33,44 @@ const ProfilePage: React.FC = () => {
   useEffect(() => {
     const storedUser = meLocalStorage('user');
     const storedRole = meLocalStorage('role');
+    const storedToken = meLocalStorage('token');
 
-    console.log('storedRole', storedRole);
-    console.log('storedUser', storedUser);
-    if (storedRole) {
-      setRole(storedRole);
-    }
-    if (storedUser) {
+    if (!storedUser || !storedToken) {
+      navigate('/login');
+    } else {
       setUser(storedUser);
+      setRole(storedRole || 'defaultRole');
     }
   }, [navigate]);
 
-  if (!role) {
+  if (!user || !role) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
-      <img src={user?.banner} alt="Profile Banner" />
-      <img src={user?.avatar} alt="Profile Avatar" />
+      {/* Display the user's banner */}
+      <img src={user.banner?.url} alt={user.banner?.alt} />
 
-      <h1>Name: {user?.name}</h1>
-      <p>Email: {user?.email}</p>
+      {/* Display the user's avatar */}
+      <img src={user.avatar?.url} alt={user.avatar?.alt} />
 
-      {!user?.venueManager && (
+      <h1>Name: {user.name}</h1>
+      <p>Email: {user.email}</p>
+
+      {/* Button to become a venue manager */}
+      {!user.venueManager && (
         <button onClick={() => navigate('/admin')}>
           Become a Venue Manager
         </button>
       )}
 
-      <p>Bookings: {user?._count.booking}</p>
-      <p>Venues: {user?._count.venue}</p>
+      {/* Display the user's booking and venue counts */}
+      <p>Bookings: {user._count?.booking ?? 'No bookings'}</p>
+      <p>Venues: {user._count?.venue ?? 'No venues'}</p>
 
-      {user?.venueManager && (
+      {/* Display the user's venues if they are a venue manager */}
+      {user.venueManager && (
         <div>
           <h2>Your Venues</h2>
           <VenueList userId={user.id} venues={[]} />
@@ -67,6 +78,7 @@ const ProfilePage: React.FC = () => {
         </div>
       )}
 
+      {/* Logout button */}
       <button
         onClick={() => {
           removeLocalStorage('token');
