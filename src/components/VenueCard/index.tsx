@@ -33,12 +33,12 @@ const VenueCard: React.FC<VenueCardProps> = ({
   const mediaItem = media && media.length > 0 ? media[0] : null;
 
   return (
-    <div className="relative flex h-96 w-72 flex-col items-center justify-center rounded-lg bg-primary text-secondary shadow-lg">
+    <div className="relative flex h-96 h-full w-72 w-full max-w-full flex-col items-center justify-center rounded-lg bg-primary p-4 pt-2 text-secondary shadow-lg md:p-8 md:pt-2 lg:p-12 lg:pt-2">
       {mediaItem ? (
         <img
           src={mediaItem.url}
           alt={mediaItem.alt}
-          className="h-40 w-full rounded-t-lg object-cover"
+          className="mb-4 h-auto w-full rounded-t-lg object-cover"
         />
       ) : (
         <img
