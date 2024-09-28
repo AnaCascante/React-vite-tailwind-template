@@ -78,7 +78,7 @@ export const QueryOwner = `
     }
     `;
 
-export const queryBooking = `
+export const QueryBooking = `
     {
       id
       dateFrom

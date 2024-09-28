@@ -5,18 +5,21 @@ import VenueCard from '../../components/VenueCard';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { FcCalendar } from 'react-icons/fc';
+import { BookVenue } from '../../services/Bookings';
 
 const VenuePage: React.FC = () => {
   const { id = '' } = useParams<{ id: string }>();
   const [venue, setVenue] = useState<Venue | null>(null);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | [Date, Date]>(
+    new Date()
+  );
   const [showCalendar, setShowCalendar] = useState(false);
 
   const handleDateChange = (date: Date | Date[]) => {
     if (Array.isArray(date)) {
-      setSelectedDate(date[0]);
+      setSelectedDate(date as [Date, Date]);
     } else {
-      setSelectedDate(date);
+      setSelectedDate([date, date]);
     }
   };
 
@@ -35,6 +38,35 @@ const VenuePage: React.FC = () => {
     };
     getVenue();
   }, [id]);
+
+  const handleBooking = async () => {
+    if (!venue || !selectedDate) {
+      return;
+    }
+
+    const dateFrom = Array.isArray(selectedDate)
+      ? selectedDate[0]
+      : selectedDate;
+    const dateTo = Array.isArray(selectedDate) ? selectedDate[1] : selectedDate;
+
+    const bookingData = {
+      datoFrom: dateFrom.toISOString(),
+      datoTo: dateTo.toISOString(),
+      guests: 1,
+      id: venue.id,
+    };
+
+    console.log('Booking data:', bookingData);
+
+    try {
+      await BookVenue(bookingData);
+      setShowCalendar(false);
+      alert('Booking confirmed!');
+    } catch (error) {
+      console.error('Error booking the venue:', error);
+      alert('Failed to book the venue');
+    }
+  };
 
   if (!venue) {
     return <div>Loading...</div>;
@@ -90,10 +122,7 @@ const VenuePage: React.FC = () => {
             </div>
             <button
               className="mx-auto mt-4 flex items-center justify-center rounded bg-primary p-4 py-2 text-lg font-bold text-secondary"
-              onClick={() => {
-                setShowCalendar(false);
-                alert('Booking confirmed!');
-              }}
+              onClick={handleBooking}
             >
               Book now
             </button>
