@@ -41,6 +41,8 @@ const VenuePage: React.FC = () => {
     getVenue();
   }, [id]);
 
+  // need handlechange and handlesubmit forms for booking, booking data, and booking form
+
   const handleBooking = async () => {
     if (!token) {
       alert(
