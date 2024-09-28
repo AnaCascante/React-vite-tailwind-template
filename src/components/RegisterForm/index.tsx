@@ -100,7 +100,7 @@ const SignUpForm: React.FC = () => {
       try {
         const registerData = {
           name: formData.name.trim(),
-          email: formData.email.trim().toLocaleLowerCase(),
+          email: formData.email.trim().toLowerCase(),
           password: formData.password,
           bio: '',
           avatar: { url: formData.avatar, alt: '' },
@@ -113,7 +113,7 @@ const SignUpForm: React.FC = () => {
         if (result) {
           console.log('Register response:', result);
 
-          const data = result.data;
+          /*const data = result.data;
           setLocalStorage('token', data.accessToken);
           setLocalStorage('user', JSON.stringify(data));
           setLocalStorage('venueManager', data.venueManager);
@@ -121,7 +121,7 @@ const SignUpForm: React.FC = () => {
           console.log(
             'Token stored in local storage:',
             localStorage.getItem('token')
-          );
+          );*/
 
           alert('Registration successful');
           navigate('/login');
