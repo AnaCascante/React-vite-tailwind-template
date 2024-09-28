@@ -72,7 +72,10 @@ const VenuePage: React.FC = () => {
 
         {showCalendar && (
           <div className="mt-4 block w-full">
-            <div className="overflow-hidden rounded-lg">
+            <div
+              className="overflow-hidden rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+            >
               <Calendar
                 onChange={(value) => handleDateChange(value as Date | Date[])}
                 value={selectedDate}
@@ -85,7 +88,13 @@ const VenuePage: React.FC = () => {
                 className="w-full"
               />
             </div>
-            <button className="mx-auto mt-4 flex items-center justify-center rounded bg-primary p-4 py-2 text-lg font-bold text-secondary">
+            <button
+              className="mx-auto mt-4 flex items-center justify-center rounded bg-primary p-4 py-2 text-lg font-bold text-secondary"
+              onClick={() => {
+                setShowCalendar(false);
+                alert('Booking confirmed!');
+              }}
+            >
               Book now
             </button>
           </div>
