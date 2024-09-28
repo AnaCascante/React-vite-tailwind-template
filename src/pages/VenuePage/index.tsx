@@ -42,7 +42,7 @@ const VenuePage: React.FC = () => {
 
   return (
     <div className="mx-auto flex min-h-screen flex-col items-center justify-center p-4 md:p-8 lg:p-12">
-      <div className="mx-auto flex w-full max-w-xs flex-col items-center justify-center sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
+      <div className="mx-auto flex w-full max-w-md items-center justify-center p-4 sm:max-w-lg md:max-w-2xl md:p-6 lg:max-w-3xl lg:p-8 xl:max-w-5xl">
         <VenueCard
           key={venue.id}
           id={venue.id}
