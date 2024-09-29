@@ -1,3 +1,14 @@
+# Holidaze
+
+Holidaze is an accommodation booking application designed for both customers and venue managers. Customers can explore and book various venues, while venue managers can list, manage, and view bookings for their properties. The app features user authentication, dynamic search functionality, and a responsive UI for seamless booking experiences.
+
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)
+
+
 # Render 
 
 https://holidaze-inzc.onrender.com
