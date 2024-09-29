@@ -27,13 +27,13 @@ const VenueCard: React.FC<VenueCardProps> = ({
   rating,
   meta,
   isDetailed,
-}) => {
+}: VenueCardProps) => {
   console.log('Meta Data:', meta);
   console.log('isDetailed:', isDetailed);
   const mediaItem = media && media.length > 0 ? media[0] : null;
 
   return (
-    <div className="relative flex h-full w-full max-w-full flex-col items-center justify-center rounded-lg bg-primary p-4 pt-2 text-secondary shadow-lg md:p-8 md:pt-2 lg:p-12 lg:pt-2">
+    <div className="relative flex h-full w-full max-w-full flex-col items-center justify-center rounded-lg bg-primary p-4 pt-2 text-secondary shadow-lg md:p-8 md:pt-6 lg:p-12 lg:pt-8">
       {mediaItem ? (
         <img
           src={mediaItem.url}
