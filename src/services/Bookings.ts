@@ -1,4 +1,4 @@
-import { ApiUrls, BaseUrl } from './ApiUrl';
+//import { ApiUrls, BaseUrl } from './ApiUrl';
 import { API_KEY } from './Registration';
 // import { QueryBooking, QueryCustomer, QueryOwner } from './Queries';
 
