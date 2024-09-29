@@ -21,21 +21,24 @@ const HomePage: React.FunctionComponent = (): JSX.Element => {
   console.log('venues', venues);
 
   return (
-    <div className="flex-grow">
+    <div className="flex-grow bg-gray-100">
       <SearchBar />
-      <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
+
+      <div className="grid grid-cols-1 gap-6 p-4 md:grid-cols-2 lg:grid-cols-3">
         {venues.map((venue) => (
           <VenueCard
             key={venue.id}
             id={venue.id}
             name={venue.name}
-            media={venue.media}
+            media={venue.media[0]}
             city={venue.location.city}
             country={venue.location.country}
             price={venue.price}
             rating={venue.rating}
             meta={venue.meta}
             isDetailed={false}
+            description={venue.description}
+            maxGuests={venue.maxGuests}
           />
         ))}
       </div>

@@ -1,6 +1,5 @@
 export function meLocalStorage(key: string) {
   const value = localStorage.getItem(key);
-  console.log(`Retrieved ${key} from local storage:`, value);
 
   if (key === 'token') {
     return value;
