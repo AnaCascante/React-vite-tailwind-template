@@ -4,6 +4,8 @@ import Norway from '../../assets/Norway.png';
 import { VenueData } from '../../services/Bookings';
 
 interface VenueCardProps extends VenueData {
+  country?: string;
+  city?: string;
   isDetailed?: boolean; // Determines if the card is a small preview or a full page
 }
 

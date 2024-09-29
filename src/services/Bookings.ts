@@ -1,8 +1,6 @@
-//import { ApiUrls, BaseUrl } from './ApiUrl';
 import { ApiUrls } from './ApiUrl';
 import { API_KEY } from './Registration';
 import { Location, Media, MetaData } from './VenuesService';
-// import { QueryBooking, QueryCustomer, QueryOwner } from './Queries';
 
 export interface BookingData {
   id?: string;
@@ -41,7 +39,6 @@ export interface BookingQuery {
   status?: 'pending' | 'confirmed' | 'cancelled';
 }
 
-
 interface Avatar {
   url: string;
   alt: string;
@@ -60,44 +57,43 @@ interface UserProfile {
 }
 
 export const updateVenue = async (venueId: string, venueDetails: VenueData) => {
-  // Filtrar los campos vacíos
+  // Filter out empty fields
   const updatedVenue = {
     name: venueDetails.name,
     price: Number(venueDetails.price),
     description: venueDetails.description,
     maxGuests: Number(venueDetails.maxGuests),
-  }
-  console.log("🚀 ~ updateVenue ~ updatedVenue:", updatedVenue)
+  };
+  console.log('🚀 ~ updateVenue ~ updatedVenue:', updatedVenue);
 
   try {
-    const response = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${venueId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-        'X-Noroff-API-Key': API_KEY,
-      },
-      body: JSON.stringify(updatedVenue), // Enviar solo los campos no vacíos
-    });
+    const response = await fetch(
+      `https://v2.api.noroff.dev/holidaze/venues/${venueId}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          'X-Noroff-API-Key': API_KEY,
+        },
+        body: JSON.stringify(updatedVenue),
+      }
+    );
 
     if (!response.ok) {
       throw new Error('Error updating venue');
     }
 
-    window.location.reload(); // Recargar la página si la actualización fue exitosa
-    return true; // Indica que la actualización fue exitosa
+    window.location.reload();
   } catch (error) {
     console.error('Failed to update venue:', error);
-    throw error; // Propaga el error para que pueda ser manejado en el componente
+    throw error;
   }
 };
 
-export const updateUserProfile = async (
-  name: string,
-  profile: UserProfile,
-) => {
-  console.log("🚀 ~ profile:", profile)
-  // Filtrar los campos vacíos
+export const updateUserProfile = async (name: string, profile: UserProfile) => {
+  console.log('🚀 ~ profile:', profile);
+  // Filter out empty fields
   const updatedProfile = {
     bio: profile.bio || undefined,
     avatar: {
@@ -111,7 +107,7 @@ export const updateUserProfile = async (
     venueManager: profile.venueManager,
   };
 
-  // Eliminar propiedades con valor undefined
+  // Delete undefined fields
   const filteredProfile = Object.fromEntries(
     Object.entries(updatedProfile).filter(([_, v]) => v !== undefined)
   );
@@ -124,17 +120,17 @@ export const updateUserProfile = async (
         Authorization: `Bearer ${localStorage.getItem('token')}`,
         'X-Noroff-API-Key': API_KEY,
       },
-      body: JSON.stringify(filteredProfile), // Enviar solo los campos no vacíos
+      body: JSON.stringify(filteredProfile),
     });
 
     if (!response.ok) {
       throw new Error('Error updating profile');
     }
 
-    return true; // Indica que la actualización fue exitosa
+    return true;
   } catch (error) {
     console.error('Failed to update profile:', error);
-    throw error; // Propaga el error para que pueda ser manejado en el componente
+    throw error;
   }
 };
 
@@ -185,14 +181,12 @@ export const BookVenue = async (booking: BookingData): Promise<any> => {
 // Function to create a booking
 
 export const createVenue = async (venue: VenueData): Promise<void> => {
-  // Obtener el token y verificar si está disponible
   const token = localStorage.getItem('token');
   if (!token) {
     console.error('Error: No authentication token found.');
     throw new Error('No authentication token found. Please log in again.');
   }
 
-  // Convertir precios y maxGuests a números
   venue.price = Number(venue.price);
   venue.maxGuests = Number(venue.maxGuests);
 
@@ -207,7 +201,6 @@ export const createVenue = async (venue: VenueData): Promise<void> => {
       body: JSON.stringify(venue),
     });
 
-    // Manejo de la respuesta
     if (!response.ok) {
       const errorResponse = await response.json();
       console.error('Error Response:', errorResponse);
@@ -216,10 +209,9 @@ export const createVenue = async (venue: VenueData): Promise<void> => {
       );
     }
 
-    // Aquí esperamos el objeto de respuesta que contiene el ID
     const { data } = await response.json();
 
-    // Redirigir al usuario a la página del nuevo venue usando su ID
+    // Redirect to the newly created venue
     window.location.href = `/venue/${data.id}`;
   } catch (error: any) {
     console.error('Error creating venue:', error);
@@ -299,7 +291,7 @@ export const DeleteBooking = async (id: string): Promise<void> => {
       );
     }
 
-    // reload the pasge
+    // reload the page
     window.location.reload();
   } catch (error: any) {
     console.error('Error deleting booking:', error);
@@ -353,7 +345,6 @@ export const VenueByProfile = async (name: string): Promise<VenueData[]> => {
 export const DeleteVenue = async (id: string): Promise<void> => {
   const token = localStorage.getItem('token');
 
-  // Check if the token is present
   if (!token) {
     console.error('Error: No authentication token found.');
     throw new Error('No authentication token found. Please log in again.');
@@ -387,40 +378,3 @@ export const DeleteVenue = async (id: string): Promise<void> => {
     );
   }
 };
-
-/**/
-
-// Function to fetch bookings on query parameters
-
-/*
-
-
-
-// Function to update a booking
-
-export const updateBooking = async (
-  id: string,
-  booking: Partial<BookingData>
-): Promise<BookingData> => {
-  const token = localStorage.getItem('token');
-  try {
-    const response = await fetch(ApiUrls.Booking(id), {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-        'X-Noroff-API-Key': API_KEY,
-      },
-      body: JSON.stringify(booking),
-    });
-    if (!response.ok) {
-      throw new Error('Failed to update booking');
-    }
-    return await response.json();
-  } catch (error) {
-    console.error('Error update booking:', error);
-    throw error;
-  }
-};
-
-*/

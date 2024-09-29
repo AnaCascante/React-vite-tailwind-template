@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-// Define el tipo de datos que vamos a usar
 interface Avatar {
   url: string;
   alt: string;
@@ -18,7 +17,8 @@ interface UserProfile {
   venueManager: boolean;
 }
 
-// Función para validar URLs
+// Url validation
+
 const isValidURL = (url: string) => {
   const pattern = new RegExp(
     '^(https?:\\/\\/)?' + // protocol
@@ -31,7 +31,7 @@ const isValidURL = (url: string) => {
   return !!pattern.test(url);
 };
 
-// Componente de Edición del Perfil
+// Edit Profile Component
 const ProfileEdit: React.FC<{
   name: string;
   profile: UserProfile;
@@ -76,13 +76,15 @@ const ProfileEdit: React.FC<{
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Filtrar los campos vacíos y válidos
+    // filter out empty values
+
     const profileToUpdate: any = {
       bio: updatedProfile.bio || undefined,
       venueManager: updatedProfile.venueManager,
     };
 
-    // Validar y agregar solo URLs válidas
+    // Validate URLs
+
     if (isValidURL(updatedProfile.avatar.url)) {
       profileToUpdate.avatar = {
         url: updatedProfile.avatar.url,
@@ -161,7 +163,7 @@ const ProfileEdit: React.FC<{
         <label className="inline-flex items-center">
           <input
             type="checkbox"
-            checked={updatedProfile.venueManager} // Cambiado a updatedProfile
+            checked={updatedProfile.venueManager}
             onChange={handleVenueManagerChange}
             className="mr-2"
           />
@@ -170,7 +172,7 @@ const ProfileEdit: React.FC<{
 
         <button
           type="submit"
-          className="mt-4 rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-500 w-full block"
+          className="mt-4 block w-full rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-500"
         >
           Update Profile
         </button>

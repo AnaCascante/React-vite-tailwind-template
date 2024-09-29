@@ -41,8 +41,6 @@ const VenuePage: React.FC = () => {
     getVenue();
   }, [id]);
 
-  // need handlechange and handlesubmit forms for booking, booking data, and booking form
-
   const handleBooking = async () => {
     if (!token) {
       alert(
@@ -54,11 +52,6 @@ const VenuePage: React.FC = () => {
     if (!venue || !selectedDate) {
       return;
     }
-
-    /*const dateFrom = Array.isArray(selectedDate)
-      ? selectedDate[0]
-      : selectedDate;
-    const dateTo = Array.isArray(selectedDate) ? selectedDate[1] : selectedDate;*/
 
     const [dateFrom, dateTo] = Array.isArray(selectedDate)
       ? selectedDate
@@ -99,13 +92,18 @@ const VenuePage: React.FC = () => {
           id={venue.id}
           name={venue.name}
           description={venue.description}
-          media={venue.media}
+          media={
+            venue.media.length > 0
+              ? { url: venue.media[0].url, alt: venue.media[0].alt }
+              : undefined
+          }
           city={venue.location.city}
           country={venue.location.country}
           price={venue.price}
           rating={venue.rating}
           meta={venue.meta}
           isDetailed={true}
+          maxGuests={venue.maxGuests}
         />
       </div>
       <div

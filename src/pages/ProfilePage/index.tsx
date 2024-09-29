@@ -5,7 +5,7 @@ import {
   removeLocalStorage,
 } from '../../services/localStorage';
 import VenueList from '../../components/VenueList';
-import CreateVenue from '../../components/CreateVenue'; // Importar el componente
+import CreateVenue from '../../components/CreateVenue';
 import BookingList from '../../components/BookingList';
 import VenueListProfile from '../../components/VenueListProfile';
 import ProfileEdit from '../../components/ProfileEdit';
@@ -45,11 +45,11 @@ const ProfilePage: React.FC = () => {
     if (!storedUser || !storedToken) {
       navigate('/login');
     } else {
-      // Hacer fetch al perfil del usuario
+      // Fetch user profile data
       const fetchUserProfile = async () => {
         try {
           const response = await fetch(
-            `https://v2.api.noroff.dev/holidaze/profiles/${storedUser.data.name}`,
+            `https://v2.api.noroff.dev/holidaze/profiles/${storedUser.name}`,
             {
               method: 'GET',
               headers: {
@@ -66,7 +66,7 @@ const ProfilePage: React.FC = () => {
 
           const userProfileData = await response.json();
 
-          // Actualiza el usuario en localStorage combinando la nueva información
+          // Update user state with fetched data
           const updatedUser = {
             ...storedUser.data,
             ...userProfileData.data,
@@ -148,7 +148,7 @@ const ProfilePage: React.FC = () => {
           <div className="mt-8">
             <h2 className="text-xl font-semibold">Create a New Venue</h2>
 
-            {/* Mostrar el formulario para crear un venue */}
+            {/* Form to createvenue*/}
             {isCreatingVenue ? (
               <CreateVenue />
             ) : (
