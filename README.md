@@ -9,6 +9,10 @@ Holidaze is an accommodation booking application designed for both customers and
 ![Render](https://img.shields.io/badge/Render-46E3B7?style=for-the-badge&logo=render&logoColor=black)
 
 
+<!-- 
+Netlify livedemo needs to be fixed enjoyholidaze.netlify.app
+-->
+
 # Render 
 
 https://holidaze-inzc.onrender.com
