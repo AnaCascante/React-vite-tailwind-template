@@ -26,24 +26,21 @@ interface UserProfile {
 }
 
 const ProfilePage: React.FC = () => {
-  const [role, setRole] = useState<string | null>(null);
   const [user, setUser] = useState<UserProfile | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = meLocalStorage('user');
-    const storedRole = meLocalStorage('role');
     const storedToken = meLocalStorage('token');
 
     if (!storedUser || !storedToken) {
       navigate('/login');
     } else {
       setUser(storedUser);
-      setRole(storedRole || 'defaultRole');
     }
   }, [navigate]);
 
-  if (!user || !role) {
+  if (!user) {
     return <div>Loading...</div>;
   }
 

@@ -4,8 +4,8 @@ import { API_KEY } from './Registration';
 
 export interface BookingData {
   venueId?: string;
-  datoFrom: string;
-  datoTo: string;
+  dateFrom: string;
+  dateTo: string;
   guests: number;
   created?: string;
   updated?: string;
@@ -22,7 +22,7 @@ export interface BookingQuery {
 
 // Function to fetch bookings on BookingData
 
-export const BookVenue = async (booking: BookingData): Promise<BookingData> => {
+export const BookVenue = async (booking: BookingData): Promise<any> => {
   const token = localStorage.getItem('token');
   const id = booking.venueId; // Assuming venueId is the id needed
   if (!id) {
@@ -48,18 +48,25 @@ export const BookVenue = async (booking: BookingData): Promise<BookingData> => {
 
     if (!response.ok) {
       console.error('Response not ok:', responseBody);
-      throw Error('Failed to book venue');
+      return {
+        success: false,
+        response: null,
+        error: responseBody?.errors[0]?.message,
+      };
     }
-    return await response.json();
+    return {
+      success: true,
+      response: responseBody,
+      error: null,
+    };
   } catch (error) {
     console.error('Error booking venue:', error);
-    throw error;
   }
 };
 
 // Function to create a booking
 
-export const createBooking = async (
+/*export const createBooking = async (
   booking: BookingData
 ): Promise<BookingData> => {
   const token = localStorage.getItem('token');
@@ -82,6 +89,7 @@ export const createBooking = async (
     throw error;
   }
 };
+};*/
 
 // Function to fetch bookings on query parameters
 

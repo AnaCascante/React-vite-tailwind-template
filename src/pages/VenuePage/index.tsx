@@ -65,8 +65,8 @@ const VenuePage: React.FC = () => {
       : [selectedDate, selectedDate];
 
     const bookingData = {
-      datoFrom: dateFrom.toISOString(),
-      datoTo: dateTo.toISOString(),
+      dateFrom: dateFrom.toISOString(),
+      dateTo: dateTo.toISOString(),
       guests: 1,
       venueId: id,
     };
@@ -74,9 +74,13 @@ const VenuePage: React.FC = () => {
     console.log('Booking data:', bookingData);
 
     try {
-      await BookVenue(bookingData);
-      setShowCalendar(false);
-      alert('Booking confirmed!');
+      const data = await BookVenue(bookingData);
+      if (data.success) {
+        setShowCalendar(false);
+        alert('Venue booked successfully');
+      } else {
+        alert(data?.error);
+      }
     } catch (error) {
       console.error('Error booking the venue:', error);
       alert('Failed to book the venue');
