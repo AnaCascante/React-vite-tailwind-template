@@ -4,7 +4,7 @@ https://enjoyholidaze.netlify.app/
 
 # Render 
 
-https://holidaze-inzc.onrender.com/profile
+https://holidaze-inzc.onrender.com
 
 # React + TypeScript + Vite
 
