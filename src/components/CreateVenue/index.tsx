@@ -7,7 +7,6 @@ const CreateVenue = () => {
     description: '',
     price: 0,
     maxGuests: 0,
-    rating: 0,
     meta: {
       wifi: false,
       parking: false,

@@ -7,12 +7,11 @@ export const ApiUrls = {
   Bookings: `${BaseUrl}/holidaze/bookings`,
   Users: `${BaseUrl}/holidaze/profiles`,
   Me: `${BaseUrl}/me`,
-
   Venue: (id: string) => `${BaseUrl}/holidaze/venues/${id}`,
   Booking: (id: string) => `${BaseUrl}/holidaze/bookings/${id}`,
-  User: (id: string) => `${BaseUrl}/holidaze/profile/${id}`,
+  User: (id: string) => `${BaseUrl}/holidaze/profiles/${id}`,
   UserBookings: (name: string) =>
-    `${BaseUrl}/holidaze/profile/${name}/bookings`,
-  UserVenues: (name: string) => `${BaseUrl}/holidaze/profile/${name}/venues`,
+    `${BaseUrl}/holidaze/profiles/${name}/bookings`,
+  UserVenues: (name: string) => `${BaseUrl}/holidaze/profiles/${name}/venues`,
   VenueBookings: (id: string) => `${BaseUrl}/holidaze/venues/${id}/bookings`,
 };

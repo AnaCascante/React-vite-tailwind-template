@@ -21,9 +21,10 @@ const HomePage: React.FunctionComponent = (): JSX.Element => {
   console.log('venues', venues);
 
   return (
-    <div className="flex-grow">
+    <div className="flex-grow bg-gray-100">
       <SearchBar />
-      <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
+
+      <div className="grid grid-cols-1 gap-6 p-4 md:grid-cols-2 lg:grid-cols-3">
         {venues.map((venue) => (
           <VenueCard
             key={venue.id}
