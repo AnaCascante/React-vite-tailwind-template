@@ -1,5 +1,7 @@
 //import { ApiUrls, BaseUrl } from './ApiUrl';
+import { ApiUrls } from './ApiUrl';
 import { API_KEY } from './Registration';
+import { Location, Media, MetaData } from './VenuesService';
 // import { QueryBooking, QueryCustomer, QueryOwner } from './Queries';
 
 export interface BookingData {
@@ -9,6 +11,24 @@ export interface BookingData {
   guests: number;
   created?: string;
   updated?: string;
+}
+
+export interface VenueData {
+  id?: string;
+  name: string;
+  description: string;
+  media?: Media;
+  price: number;
+  maxGuests: number;
+  rating: number;
+  created?: string;
+  updated?: string;
+  meta?: MetaData;
+  location?: Location;
+  owner?: {
+    name: string;
+    email: string;
+  };
 }
 
 export interface BookingQuery {
@@ -66,20 +86,20 @@ export const BookVenue = async (booking: BookingData): Promise<any> => {
 
 // Function to create a booking
 
-/*export const createBooking = async (
-  booking: BookingData
-): Promise<BookingData> => {
+export const createVenue = async (venue: VenueData): Promise<VenueData> => {
   const token = localStorage.getItem('token');
   try {
-    const response = await fetch(ApiUrls.Bookings, {
+    const response = await fetch(ApiUrls.Venues, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
         'X-Noroff-API-Key': API_KEY,
       },
-      body: JSON.stringify(booking),
+      body: JSON.stringify(venue),
     });
+
+    console.log("🚀 ~ createVenue ~ response:", response)
     if (!response.ok) {
       throw new Error('Failed to create booking');
     }
@@ -89,7 +109,8 @@ export const BookVenue = async (booking: BookingData): Promise<any> => {
     throw error;
   }
 };
-};*/
+
+/**/
 
 // Function to fetch bookings on query parameters
 
