@@ -2,7 +2,6 @@ import { LoginUser, mailRegex } from '../../services/Registration';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { setLocalStorage, meLocalStorage } from '../../services/localStorage';
-//import { UseAuth } from '../../contexts/AuthContext';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -10,7 +9,6 @@ const LoginForm: React.FC = () => {
   const [emailError, setEmailError] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
   const navigate = useNavigate();
-  //const { login } = UseAuth(); // Get login function from AuthContext
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,7 +36,7 @@ const LoginForm: React.FC = () => {
     if (isFormValid) {
       try {
         const loginData = {
-          email: email.trim().toLocaleLowerCase(),
+          email: email.trim().toLowerCase(),
           password,
         };
 
@@ -47,8 +45,15 @@ const LoginForm: React.FC = () => {
         console.log('Login response:', result);
 
         if (result) {
+          // Store the token
           setLocalStorage('token', result.data.accessToken);
+
+          // Store the user data
           setLocalStorage('user', JSON.stringify(result.data));
+
+          // Store the role, if available. Otherwise, default to 'user'.
+          setLocalStorage('role', result.data.role || 'user');
+
           setLocalStorage('venueManager', result.data.venueManager);
 
           console.log(

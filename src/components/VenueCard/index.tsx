@@ -12,7 +12,7 @@ interface VenueCardProps {
   country: string;
   price: number;
   rating: number;
-  metaData?: MetaData;
+  meta?: MetaData;
   isDetailed?: boolean;
 }
 
@@ -25,18 +25,20 @@ const VenueCard: React.FC<VenueCardProps> = ({
   country,
   price,
   rating,
-  metaData,
+  meta,
   isDetailed,
-}) => {
+}: VenueCardProps) => {
+  console.log('Meta Data:', meta);
+  console.log('isDetailed:', isDetailed);
   const mediaItem = media && media.length > 0 ? media[0] : null;
 
   return (
-    <div className="relative flex h-96 w-72 flex-col items-center justify-center rounded-lg bg-primary text-secondary shadow-lg">
+    <div className="relative flex h-full w-full max-w-full flex-col items-center justify-center rounded-lg bg-primary p-4 pt-2 text-secondary shadow-lg md:p-8 md:pt-6 lg:p-12 lg:pt-8">
       {mediaItem ? (
         <img
           src={mediaItem.url}
           alt={mediaItem.alt}
-          className="h-40 w-full rounded-t-lg object-cover"
+          className="mb-4 h-auto w-full rounded-t-lg object-cover"
         />
       ) : (
         <img
@@ -48,24 +50,33 @@ const VenueCard: React.FC<VenueCardProps> = ({
 
       <div className="p-4">
         <h2 className="text-lg font-bold">{name}</h2>
-        <p className="text-sm">{description}</p>
+        {isDetailed && description && (
+          <p>{description || 'No description available'}</p>
+        )}
         <p className="text-sm">
-          {city}, {country}
+          {city || 'Not specified'}, {country || 'Not specified'}
         </p>
         <p className="text-sm">Price: ${price}</p>
         <p className="text-sm">Rating: {rating}</p>
 
-        {isDetailed && metaData && (
+        {isDetailed && meta && (
           <>
-            {metaData.wifi && <p>Gratis Wifi</p>}
-            {metaData.parking && <p>Gratis parking</p>}
-            {metaData.breakfast && <p>Breakfast included</p>}
-            {metaData.pets && <p>Pets allowed</p>}
+            {meta.wifi && <p>Gratis Wifi</p>}
+            {meta.parking && <p>Gratis parking</p>}
+            {meta.breakfast && <p>Breakfast included</p>}
+            {meta.pets && <p>Pets allowed</p>}
           </>
         )}
-        {isDetailed && description && <p>{description}</p>}
       </div>
-      <Link to={`/venue/${id}`}>View Venue</Link>
+      <>
+        {isDetailed ? (
+          <label className="absolute bottom-4 right-4 rounded-lg bg-secondary p-2 text-primary">
+            Number of Guests: <input type="number" min="1" max="10" />
+          </label>
+        ) : (
+          <Link to={`/venue/${id}`}>View Venue</Link>
+        )}
+      </>
     </div>
   );
 };

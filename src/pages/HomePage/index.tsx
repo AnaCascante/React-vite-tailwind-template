@@ -18,6 +18,8 @@ const HomePage: React.FunctionComponent = (): JSX.Element => {
     fetchData();
   }, []);
 
+  console.log('venues', venues);
+
   return (
     <div className="flex-grow">
       <SearchBar />
@@ -32,6 +34,7 @@ const HomePage: React.FunctionComponent = (): JSX.Element => {
             country={venue.location.country}
             price={venue.price}
             rating={venue.rating}
+            meta={venue.meta}
             isDetailed={false}
           />
         ))}
