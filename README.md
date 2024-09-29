@@ -1,7 +1,3 @@
-# Netlify 
-
-https://enjoyholidaze.netlify.app/
-
 # Render 
 
 https://holidaze-inzc.onrender.com
