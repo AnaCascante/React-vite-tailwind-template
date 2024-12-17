@@ -1,4 +1,4 @@
-export const BaseUrl = 'https://v2.api.noroff.dev';
+export const BaseUrl = '/* add baseapiurl*/';
 
 export const ApiUrls = {
   Login: `${BaseUrl}/auth/login`,
