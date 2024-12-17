@@ -1,6 +1,6 @@
-export const BaseUrl = '/* add baseapiurl*/';
+export const BaseUrl = '';/* add baseapiurl*/
 
-export const ApiUrls = {
+export const ApiUrls = { /*add here needed endpoints- see exemple*/
   Login: `${BaseUrl}/auth/login`,
   Register: `${BaseUrl}/auth/register`,
   Venues: `${BaseUrl}/holidaze/venues`,
