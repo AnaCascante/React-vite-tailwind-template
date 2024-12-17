@@ -1,6 +1,6 @@
-# Holidaze
+# Template 
 
-Holidaze is an accommodation booking application designed for both customers and venue managers. Customers can explore and book various venues, while venue managers can list, manage, and view bookings for their properties. The app features user authentication, dynamic search functionality, and a responsive UI for seamless booking experiences.
+This is a  Vite- react - tailwindcss template to start new projects with all the installations done and functioning. In this template I use typescript. I have lately used Render to deploy some projects, this has been succesfull and I will search to use it more. 
 
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
@@ -10,12 +10,12 @@ Holidaze is an accommodation booking application designed for both customers and
 
 
 <!-- 
-Netlify livedemo needs to be fixed enjoyholidaze.netlify.app
+Netlify livedemo can also be used 
 -->
 
 # Render 
 
-https://holidaze-inzc.onrender.com
+
 
 # React + TypeScript + Vite
 
